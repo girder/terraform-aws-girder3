@@ -24,7 +24,7 @@ variable "subdomain_name" {
 }
 variable "route53_zone_id" {
   type = string
-  description = "The Route 53 zone ID to create a new DNS record within."
+  description = "The Route 53 zone ID to create new DNS records within."
 }
 
 variable "extra_upload_origins" {
