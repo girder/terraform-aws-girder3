@@ -1,5 +1,5 @@
 resource "aws_iam_role" "server" {
-  name = var.project_slug
+  name               = var.project_slug
   assume_role_policy = data.aws_iam_policy_document.server_assumeRolePolicy.json
 }
 

@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "assetstore" {
     allowed_headers = ["*"]
     allowed_methods = ["POST", "PUT"]
     allowed_origins = var.upload_origins
-    expose_headers  = [
+    expose_headers = [
       # https://docs.aws.amazon.com/AmazonS3/latest/API/RESTCommonResponseHeaders.html
       "Content-Length",
       "Connection",
@@ -38,7 +38,7 @@ resource "aws_s3_bucket" "assetstore" {
       # See https://stackoverflow.com/a/30217089
       "*"
     ]
-    expose_headers  = [
+    expose_headers = [
       # https://docs.aws.amazon.com/AmazonS3/latest/API/RESTCommonResponseHeaders.html
       "Content-Length",
       "Content-Type",
@@ -52,11 +52,11 @@ resource "aws_s3_bucket" "assetstore" {
 
 data "aws_iam_policy_document" "assetstore" {
   statement {
-    sid = "DenyIncorrectEncryptionHeader"
+    sid    = "DenyIncorrectEncryptionHeader"
     effect = "Deny"
     principals {
       identifiers = ["*"]
-      type = "*"
+      type        = "*"
     }
     resources = [
       # To prevent a circular reference, can't use "aws_s3_bucket.assetstore.arn" here
@@ -65,9 +65,9 @@ data "aws_iam_policy_document" "assetstore" {
     actions = ["s3:PutObject"]
     condition {
       # If the header doesn't exist, this will still pass
-      test = "StringNotEqualsIfExists"
+      test     = "StringNotEqualsIfExists"
       variable = "s3:x-amz-server-side-encryption"
-      values = ["AES256"]
+      values   = ["AES256"]
     }
   }
 }

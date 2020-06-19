@@ -1,10 +1,10 @@
 module "server" {
   source = "./modules/server"
 
-  project_slug = var.project_slug
+  project_slug      = var.project_slug
   ec2_instance_type = var.ec2_instance_type
-  ec2_ami = var.ec2_ami
-  ssh_public_key = var.ssh_public_key
+  ec2_ami           = var.ec2_ami
+  ssh_public_key    = var.ssh_public_key
 }
 resource "aws_route53_record" "server" {
   zone_id = var.route53_zone_id
@@ -25,8 +25,8 @@ module "assetstore" {
 }
 
 resource "aws_iam_role_policy" "server_assetstore" {
-  name = "${var.project_slug}-assetstore-access"
-  role = module.server.ec2_iam_role_id
+  name   = "${var.project_slug}-assetstore-access"
+  role   = module.server.ec2_iam_role_id
   policy = data.aws_iam_policy_document.server_assetstore.json
 }
 data "aws_iam_policy_document" "server_assetstore" {
@@ -44,7 +44,7 @@ data "aws_iam_policy_document" "server_assetstore" {
 module "smtp" {
   source = "./modules/smtp"
 
-  project_slug = var.project_slug
+  project_slug    = var.project_slug
   route53_zone_id = var.route53_zone_id
-  fqdn = aws_route53_record.server.fqdn
+  fqdn            = aws_route53_record.server.fqdn
 }
