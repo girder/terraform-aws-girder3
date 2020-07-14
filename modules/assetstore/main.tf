@@ -63,9 +63,18 @@ data "aws_iam_policy_document" "assetstore" {
       "arn:aws:s3:::${var.bucket_name}/*"
     ]
     actions = ["s3:PutObject"]
+
+    # Both conditions must pass to trigger a deny
     condition {
-      # If the header doesn't exist, this will still pass
-      test     = "StringNotEqualsIfExists"
+      # If the header exists
+      # Missing headers will cause the default encryption to be applied
+      test     = "Null"
+      variable = "s3:x-amz-server-side-encryption"
+      values   = ["false"]
+    }
+    condition {
+      # If the header isn't "AES256"
+      test     = "StringNotEquals"
       variable = "s3:x-amz-server-side-encryption"
       values   = ["AES256"]
     }
