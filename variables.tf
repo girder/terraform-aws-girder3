@@ -13,6 +13,11 @@ variable "ec2_ami" {
   default     = "ami-0ac80df6eff0e70b5"
   description = "The base AMI ID for the server."
 }
+variable "ec2_volume_size" {
+  type        = number
+  default     = null
+  description = "The size, in GB, of the root EBS volume for the server."
+}
 variable "ssh_public_key" {
   type        = string
   description = "An SSH public key, to be installed on the server."
