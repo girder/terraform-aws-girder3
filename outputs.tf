@@ -22,5 +22,6 @@ output "smtp_username" {
 }
 output "smtp_password" {
   value       = module.smtp.password
+  sensitive = true
   description = "The password for the outgoing SMTP server."
 }
