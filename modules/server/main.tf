@@ -11,7 +11,7 @@ resource "aws_instance" "server" {
   // Do not set subnet_id, it will be auto-selected from a default subnet
 
   root_block_device {
-    volume_size = 40
+    volume_size = var.ec2_volume_size
     volume_type = "gp2"
   }
 
