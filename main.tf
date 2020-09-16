@@ -1,3 +1,8 @@
+locals {
+  # Variable defaults cannot be directly based on other variables
+  storage_bucket_name = var.assetstore_bucket_name != "" ? var.assetstore_bucket_name : "${var.project_slug}-assetstore"
+}
+
 module "server" {
   source = "./modules/server"
 
@@ -18,7 +23,7 @@ resource "aws_route53_record" "server" {
 module "assetstore" {
   source = "./modules/assetstore"
 
-  bucket_name = "${var.project_slug}-assetstore"
+  bucket_name = local.storage_bucket_name
   upload_origins = concat(
     ["https://${aws_route53_record.server.fqdn}"],
     var.extra_upload_origins
