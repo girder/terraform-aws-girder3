@@ -4,7 +4,7 @@ output "server_fqdn" {
 }
 
 output "assetstore_bucket_name" {
-  value = module.assetstore.bucket_name
+  value       = module.assetstore.bucket_name
   description = "The S3 bucket name for the assetstore."
 }
 
@@ -22,6 +22,6 @@ output "smtp_username" {
 }
 output "smtp_password" {
   value       = module.smtp.password
-  sensitive = true
+  sensitive   = true
   description = "The password for the outgoing SMTP server."
 }
