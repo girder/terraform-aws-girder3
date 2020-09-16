@@ -80,3 +80,13 @@ data "aws_iam_policy_document" "assetstore" {
     }
   }
 }
+
+resource "aws_s3_bucket_public_access_block" "assetstore" {
+  bucket = aws_s3_bucket.assetstore.id
+
+  block_public_acls = true
+  block_public_policy = true
+  ignore_public_acls = true
+  # restrict_public_buckets also blocks cross-account access to the bucket
+  restrict_public_buckets = true
+}
