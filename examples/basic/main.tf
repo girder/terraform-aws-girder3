@@ -22,8 +22,7 @@ resource "random_pet" "instance_name" {
 }
 
 module "girder" {
-  source  = "girder/girder/aws"
-  version = "0.7.0"
+  source = "girder/girder/aws"
 
   project_slug    = random_pet.instance_name.id
   route53_zone_id = data.aws_route53_zone.domain.zone_id
