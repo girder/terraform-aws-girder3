@@ -13,6 +13,9 @@ resource "aws_instance" "server" {
   root_block_device {
     volume_size = var.ec2_volume_size
     volume_type = "gp2"
+    tags = {
+      Name = var.project_slug
+    }
   }
 
   tags = {
