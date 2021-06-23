@@ -3,12 +3,12 @@ provider "aws" {
   # Must set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY envvars
 }
 
-data "aws_route53_zone" "domain" {
+data "aws_route53_zone" "this" {
   # This must be created by hand in the AWS console
   name = "rootdomain.test"
 }
 
-data "local_file" "ssh_pub" {
+data "local_file" "ssh_public_key" {
   # This must be an existing file on the local filesystem
   filename = "/home/user/.ssh/id_rsa.pub"
 }
@@ -25,8 +25,8 @@ module "girder" {
   source = "girder/girder/aws"
 
   project_slug    = random_pet.instance_name.id
-  route53_zone_id = data.aws_route53_zone.domain.zone_id
-  ssh_public_key  = data.local_file.ssh_pub.content
+  route53_zone_id = data.aws_route53_zone.this.zone_id
+  ssh_public_key  = data.local_file.ssh_public_key.content
   subdomain_name  = random_pet.instance_name.id
 }
 
