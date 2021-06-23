@@ -1,6 +1,6 @@
 resource "aws_instance" "server" {
   instance_type                        = var.ec2_instance_type
-  ami                                  = var.ec2_ami
+  ami                                  = data.aws_ami.server.id
   monitoring                           = false
   instance_initiated_shutdown_behavior = "stop"
 
@@ -27,6 +27,16 @@ resource "aws_instance" "server" {
       # Allow an updated AMI be used for new provisions without always recreating the machine
       ami,
     ]
+  }
+}
+
+data "aws_ami" "server" {
+  owners      = ["099720109477"] # Canonical
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
   }
 }
 

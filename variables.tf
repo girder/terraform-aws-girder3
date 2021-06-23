@@ -32,12 +32,6 @@ variable "ec2_instance_type" {
   description = "The EC2 instance type for the server."
 }
 
-variable "ec2_ami" {
-  type        = string
-  default     = "ami-07df16d0682f1fa59"
-  description = "The base AMI ID for the server."
-}
-
 variable "ec2_volume_size" {
   type        = number
   default     = 40

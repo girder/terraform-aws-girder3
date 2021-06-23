@@ -8,7 +8,6 @@ module "server" {
 
   project_slug      = var.project_slug
   ec2_instance_type = var.ec2_instance_type
-  ec2_ami           = var.ec2_ami
   ec2_volume_size   = var.ec2_volume_size
   ssh_public_key    = var.ssh_public_key
 }
