@@ -1,6 +1,6 @@
 locals {
   # Variable defaults cannot be directly based on other variables
-  storage_bucket_name = var.assetstore_bucket_name != "" ? var.assetstore_bucket_name : "${var.project_slug}-assetstore"
+  storage_bucket_name = coalesce(var.assetstore_bucket_name, "${var.project_slug}-assetstore")
 }
 
 module "server" {
