@@ -52,9 +52,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "assetstore" {
   bucket = aws_s3_bucket.assetstore.id
 
   rule {
-    id                                = "abort-incomplete-multipart-upload"
-    status                            = "Enabled"
-    abort_incomplete_multipart_upload = 7
+    id     = "abort-incomplete-multipart-upload"
+    status = "Enabled"
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
   }
 }
 
