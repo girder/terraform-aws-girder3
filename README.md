@@ -1,4 +1,6 @@
 # terraform-aws-girder
+**Note: This module has been moved to `girder/girder3/aws`.**
+
 A Terraform module to provision Girder infrastructure on AWS.
 
 This provides an EC2 machine, S3 assetstore, and outgoing SMTP credentials.
