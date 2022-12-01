@@ -1,21 +1,14 @@
 resource "aws_s3_bucket" "assetstore" {
   bucket = var.bucket_name
+}
+
+resource "aws_s3_bucket_acl" "assetstore" {
+  bucket = aws_s3_bucket.assetstore.id
   acl    = "private"
-  policy = data.aws_iam_policy_document.assetstore.json
+}
 
-  // Encrypt with an Amazon-managed key
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
-  }
-
-  lifecycle_rule {
-    enabled                                = true
-    abort_incomplete_multipart_upload_days = 7
-  }
+resource "aws_s3_bucket_cors_configuration" "assetstore" {
+  bucket = aws_s3_bucket.assetstore.id
 
   cors_rule {
     allowed_headers = ["*"]
@@ -53,6 +46,32 @@ resource "aws_s3_bucket" "assetstore" {
     ]
     max_age_seconds = 600
   }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "assetstore" {
+  bucket = aws_s3_bucket.assetstore.id
+
+  rule {
+    id                                = "abort-incomplete-multipart-upload"
+    status                            = "Enabled"
+    abort_incomplete_multipart_upload = 7
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "assetstore" {
+  bucket = aws_s3_bucket.assetstore.id
+
+  // Encrypt with an Amazon-managed key
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "assetstore" {
+  bucket = aws_s3_bucket.assetstore.id
+  policy = data.aws_iam_policy_document.assetstore.json
 }
 
 data "aws_iam_policy_document" "assetstore" {
