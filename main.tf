@@ -10,6 +10,7 @@ module "server" {
   ec2_instance_type = var.ec2_instance_type
   ec2_volume_size   = var.ec2_volume_size
   ssh_public_key    = var.ssh_public_key
+  ec2_launch_ami_id = var.ec2_launch_ami_id
 }
 resource "aws_route53_record" "server" {
   zone_id = var.route53_zone_id

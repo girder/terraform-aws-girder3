@@ -1,6 +1,6 @@
 resource "aws_instance" "server" {
   instance_type                        = var.ec2_instance_type
-  ami                                  = data.aws_ami.server.id
+  ami                                  = coalesce(var.ec2_launch_ami_id, data.aws_ami.server_launch_default.id)
   monitoring                           = false
   instance_initiated_shutdown_behavior = "stop"
 
@@ -30,7 +30,7 @@ resource "aws_instance" "server" {
   }
 }
 
-data "aws_ami" "server" {
+data "aws_ami" "server_launch_default" {
   owners      = ["099720109477"] # Canonical
   most_recent = true
 
