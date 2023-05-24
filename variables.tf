@@ -45,6 +45,13 @@ variable "ec2_volume_size" {
   description = "The size, in GB, of the root EBS volume for the server."
 }
 
+variable "ec2_launch_ami_id" {
+  type        = string
+  nullable    = true
+  default     = null # Effective default is set internally
+  description = "The AMI ID used to initially launch the server. Changing this will not replace an existing instance."
+}
+
 variable "extra_upload_origins" {
   type        = list(string)
   nullable    = false

@@ -23,3 +23,10 @@ variable "ec2_volume_size" {
   default     = 40
   description = "The size, in GB, of the root EBS volume for the server."
 }
+
+variable "ec2_launch_ami_id" {
+  type        = string
+  nullable    = true
+  default     = null # Effective default is set internally
+  description = "The AMI ID used to initially launch the server. Changing this will not replace an existing instance."
+}
