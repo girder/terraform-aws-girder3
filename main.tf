@@ -48,7 +48,8 @@ data "aws_iam_policy_document" "server_assetstore" {
 }
 
 module "smtp" {
-  source = "girder/girder4/heroku//modules/smtp"
+  source  = "girder/girder4/heroku//modules/smtp"
+  version = "0.13.0"
 
   project_slug    = var.project_slug
   route53_zone_id = var.route53_zone_id
