@@ -2,9 +2,30 @@ resource "aws_s3_bucket" "assetstore" {
   bucket = var.bucket_name
 }
 
-resource "aws_s3_bucket_acl" "assetstore" {
+resource "aws_s3_bucket_ownership_controls" "assetstore" {
   bucket = aws_s3_bucket.assetstore.id
-  acl    = "private"
+  rule {
+    # Disable all ACLs, as they are discouraged for typical use cases
+    # https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html
+    object_ownership = "BucketOwnerEnforced"
+  }
+}
+
+# Don't use an aws_s3_bucket_acl resource. Attempting any ACL operation on a bucket with
+# "BucketOwnerEnforced" ownership controls (which is the default for new buckets) will fail.
+# If importing old buckets, a public canned ACL policy might need to be manually disabled before
+# applying "BucketOwnerEnforced" ownership controls will succeed.
+
+resource "aws_s3_bucket_public_access_block" "assetstore" {
+  bucket = aws_s3_bucket.assetstore.id
+
+  block_public_policy = true
+  # restrict_public_buckets also blocks cross-account access to the bucket
+  restrict_public_buckets = true
+  # ACLs are already disabled via "aws_s3_bucket_ownership_controls", but many audit tools prefer
+  # these settings too
+  block_public_acls  = true
+  ignore_public_acls = true
 }
 
 resource "aws_s3_bucket_cors_configuration" "assetstore" {
@@ -105,14 +126,4 @@ data "aws_iam_policy_document" "assetstore" {
       values   = ["AES256"]
     }
   }
-}
-
-resource "aws_s3_bucket_public_access_block" "assetstore" {
-  bucket = aws_s3_bucket.assetstore.id
-
-  block_public_acls   = true
-  block_public_policy = true
-  ignore_public_acls  = true
-  # restrict_public_buckets also blocks cross-account access to the bucket
-  restrict_public_buckets = true
 }
