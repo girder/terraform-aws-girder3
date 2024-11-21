@@ -16,13 +16,13 @@ data "local_file" "ssh_public_key" {
 # This provides a zero-configuration option for assigning names,
 # but most projects will want to select a more specific name instead
 resource "random_pet" "instance_name" {
-  prefix    = "girder3"
+  prefix    = "girder"
   length    = 2
   separator = "-"
 }
 
-module "girder3" {
-  source = "girder/girder3/aws"
+module "girder" {
+  source = "girder/girder/aws"
 
   project_slug    = random_pet.instance_name.id
   route53_zone_id = data.aws_route53_zone.this.zone_id
@@ -31,20 +31,20 @@ module "girder3" {
 }
 
 output "server_fqdn" {
-  value = module.girder3.server_fqdn
+  value = module.girder.server_fqdn
 }
 output "assetstore_bucket_name" {
-  value = module.girder3.assetstore_bucket_name
+  value = module.girder.assetstore_bucket_name
 }
 output "smtp_host" {
-  value = module.girder3.smtp_host
+  value = module.girder.smtp_host
 }
 output "smtp_port" {
-  value = module.girder3.smtp_port
+  value = module.girder.smtp_port
 }
 output "smtp_username" {
-  value = module.girder3.smtp_username
+  value = module.girder.smtp_username
 }
 output "smtp_password" {
-  value = module.girder3.smtp_password
+  value = module.girder.smtp_password
 }
