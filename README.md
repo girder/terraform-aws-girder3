@@ -1,9 +1,9 @@
-# terraform-aws-girder3
-A Terraform module to provision Girder3 infrastructure on AWS.
+# terraform-aws-girder
+A Terraform module to provision Girder infrastructure on AWS.
 
 This provides an EC2 server, S3 assetstore, and outgoing SMTP credentials.
 
-See [full usage documentation at Terraform Registry](https://registry.terraform.io/modules/girder/girder3/aws).
+See [full usage documentation at Terraform Registry](https://registry.terraform.io/modules/girder/girder/aws).
 
 ## Note on AWS Email Sending
 [Every AWS account must explicitly apply to send real emails](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/request-production-access.html),
@@ -20,5 +20,5 @@ a newly launched server, but will also not trigger the replacement of an existin
 a different AMI.
 
 Use [the `-replace` option](https://developer.hashicorp.com/terraform/cli/commands/plan#replace-address)
-with the `module.<girder3>.module.server.aws_instance.server` target (where
-`<girder3>` is the local name of this module) to force the replacement of an existing server.
+with the `module.<girder>.module.server.aws_instance.server` target (where
+`<girder>` is the local name of this module) to force the replacement of an existing server.
